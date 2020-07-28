@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pyj520.shop.api.dao.RolePermissionMapper">
+    <resultMap id="BaseResultMap" type="cn.pyj520.shop.api.model.po.RolePermissionKey">
+        <id column="rid" property="rid" jdbcType="INTEGER"/>
+        <id column="pid" property="pid" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="cn.pyj520.shop.api.model.po.RolePermissionKey">
+    delete from role_permission
+    where rid = #{rid,jdbcType=INTEGER}
+      and pid = #{pid,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByRoleId">
+   delete from role_permission
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="cn.pyj520.shop.api.model.po.RolePermissionKey">
+    insert into role_permission (rid, pid)
+    values (#{rid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.pyj520.shop.api.model.po.RolePermissionKey">
+        insert into role_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rid != null">
+                rid,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rid != null">
+                #{rid,jdbcType=INTEGER},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>

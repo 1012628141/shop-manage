@@ -17,6 +17,7 @@
     from role
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from role
     where id = #{id,jdbcType=INTEGER}
@@ -90,4 +91,27 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <sql id="listRoleByUserId" >
+    SELECT
+	*
+	FROM role AS r ,(SELECT @pv := (
+		SELECT GROUP_CONCAT(rid) FROM
+		user_role AS ur
+		WHERE ur.uid= #{userId}
+	)as us
+	) b
+	WHERE
+		(FIND_IN_SET (parent_id,@pv) > 0
+			OR
+		FIND_IN_SET (id,@pv) > 0
+		)
+		AND
+	@pv := concat(@pv, ',', id)
+  </sql>
+
+
+  <select id="maxSonId" resultType="java.lang.Integer">
+      select max(id) from  role where parent_id=#{id}
+  </select>
 </mapper>

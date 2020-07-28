@@ -58,7 +58,7 @@ public class JsonResult {
 
     public static ResponseEntity toEntity(NetworkCode code, String message) {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", String.valueOf(code));
+        map.put("code", code.getCode());
         map.put("msg", message == null ? "" : message);
         //错误信息全部发邮件
         return new ResponseEntity<>(map, HttpStatus.OK);

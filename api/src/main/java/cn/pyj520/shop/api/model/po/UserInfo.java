@@ -1,10 +1,16 @@
 package cn.pyj520.shop.api.model.po;
 
 import cn.pyj520.shop.api.model.validate.Login;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserInfo {
     private Integer id;
 

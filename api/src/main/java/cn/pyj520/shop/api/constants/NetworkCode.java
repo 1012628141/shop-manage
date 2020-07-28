@@ -13,9 +13,9 @@ public enum NetworkCode {
 
     CODE_SUCCESS(0, "请求成功"),
 
-    REFRESH_TOKEN_EXPIRED(1000, "REFRESH-TOKEN失效"),
+    ACCESS_TOKEN_EXPIRED(1000, "ACCESS-TOKEN失效"),
 
-    ACCESS_TOKEN_EXPIRED(1001, "ACCESS-TOKEN失效"),
+    REFRESH_TOKEN_EXPIRED(1001, "REFRESH-TOKEN失效"),
 
     CODE_SYS_FAIL(1002, "系统错误"),
 
@@ -36,15 +36,14 @@ public enum NetworkCode {
 
     ACCOUNT_PASSWORD_ERROR(100002, "账号或者密码错误"),
 
-    ACCOUNT_NO_REGISTER(100003, "账号未注册"),
+    ACCOUNT_NO_REGISTER(100004, "账号未注册"),
 
     ACCOUNT_NOT_ACTIVED(100005, "账号未激活"),
 
     ACCOUNT_IS_ACTIVED(100006, "账号已经激活状态"),
 
-    ORIGINAL_PASSWORD_ERROR(100007, "原密码错误"),
+    ORIGINAL_PASSWORD_ERROR(100008, "原密码错误");
 
-    CODE_IS_USED(100008, "验证码已经被使用");
 
 
     private final Integer code;

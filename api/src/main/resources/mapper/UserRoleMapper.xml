@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pyj520.shop.api.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="cn.pyj520.shop.api.model.po.UserRoleKey" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="cn.pyj520.shop.api.model.po.UserRoleKey" >
+    delete from user_role
+    where uid = #{uid,jdbcType=INTEGER}
+      and rid = #{rid,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByUid" parameterType="cn.pyj520.shop.api.model.po.UserRoleKey" >
+    delete from user_role
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insert" parameterType="cn.pyj520.shop.api.model.po.UserRoleKey" >
+    insert into user_role (uid, rid)
+    values (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.pyj520.shop.api.model.po.UserRoleKey" >
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="listRole" resultType="cn.pyj520.shop.api.model.vo.RoleVO">
+    <include refid="cn.pyj520.shop.api.dao.RoleMapper.listRoleByUserId">
+      <property name="userId" value="userId"/>
+    </include>
+  </select>
+</mapper>

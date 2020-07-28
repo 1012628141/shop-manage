@@ -46,7 +46,7 @@
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <!-- 指定数据库表 -->
+       <!--  指定数据库表 -->
 
 <!--
         <table schema="" tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false"
@@ -55,7 +55,11 @@
         <table schema="" tableName="role" domainObjectName="Role" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <table schema="" tableName="permission" domainObjectName="Permission" enableCountByExample="false"
+        <table schema="" tableName="order" domainObjectName="Order" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+        <table schema="" tableName="category" domainObjectName="Category" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

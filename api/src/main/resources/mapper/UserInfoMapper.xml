@@ -16,8 +16,12 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, email, phone, password, address, gender, birthday, avator_url, status, 
+    id, name, email, phone, password, address, gender, birthday, avator_url, status,
     update_time, create_time
+  </sql>
+    <sql id="Base_Column_List_Ui">
+    ui.id, ui.name, ui.email, ui.phone, ui.password, ui.address, ui.gender, ui.birthday, ui.avator_url, ui.status,
+    ui.update_time, ui.create_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -42,7 +46,8 @@
       #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-    <insert id="insertSelective" parameterType="cn.pyj520.shop.api.model.po.UserInfo">
+    <insert id="insertSelective" parameterType="cn.pyj520.shop.api.model.po.UserInfo" useGeneratedKeys="true"
+            keyProperty="id">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -180,8 +185,34 @@
         select
         <include refid="Base_Column_List"/>
         from user_info
-        where id = #{account}
+        where
+        status !=1
+        and (id = #{account}
         or phone=#{account}
-        or email=#{account}
+        or email=#{account})
+
+    </select>
+    <select id="listUserInfo" resultType="cn.pyj520.shop.api.model.vo.UserInfoVO">
+        select
+        DISTINCT
+        <include refid="Base_Column_List_Ui"/>
+        from user_info as ui
+        left join user_role as ur on ui.id=ur.uid
+        inner join
+        (
+        <include refid="cn.pyj520.shop.api.dao.RoleMapper.listRoleByUserId">
+            <property name="userId" value="userId"/>
+        </include>
+        )as r
+        on ur.rid=r.id
+        where ui.status!=1
+        <if test="keyword!=null">
+            <bind name="pattern" value="'%'+keyword + '%'"/>
+            and (
+            ui.name like #{pattern} or
+            ui.email like #{pattern} or
+            ui.phone like #{pattern}
+            )
+        </if>
     </select>
 </mapper>

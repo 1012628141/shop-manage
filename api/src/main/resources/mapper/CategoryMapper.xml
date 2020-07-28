@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pyj520.shop.api.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="cn.pyj520.shop.api.model.po.Category">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="deep" property="deep" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, deep, parent_id, status, update_time, create_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="cn.pyj520.shop.api.model.po.Category">
+    insert into category (id, name, deep, 
+      parent_id, status, update_time, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{deep,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.pyj520.shop.api.model.po.Category">
+        insert into category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="deep != null">
+                deep,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="deep != null">
+                #{deep,jdbcType=INTEGER},
+            </if>
+
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.pyj520.shop.api.model.po.Category">
+        update category
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="deep != null">
+                deep = #{deep,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.pyj520.shop.api.model.po.Category">
+    update category
+    set name = #{name,jdbcType=VARCHAR},
+      deep = #{deep,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--  <select id="listCategory" resultType="cn.pyj520.shop.api.model.vo.CategoryVO">
+        SELECT
+        <include refid="Base_Column_List"></include>
+         FROM category AS c,( SELECT @pv :=
+          <choose>
+            <when test="parentId!=null">
+              #{parentId}
+            </when>
+            <otherwise>
+              1
+            </otherwise>
+          </choose>
+
+          )AS p
+        WHERE
+        (FIND_IN_SET ( parent_id, @pv ) > 0)
+        AND @pv := concat(@pv,',',id)
+      </select>-->
+
+    <select id="listCategory" resultType="cn.pyj520.shop.api.model.vo.CategoryVO">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM category
+        where status!=1
+        <if test="parentId !=null">
+            and parent_id=#{parentId}
+        </if>
+    </select>
+    <select id="maxSonId" resultType="java.lang.Integer">
+        SELECT max(id) from category where  parent_id=#{parentId}
+
+    </select>
+</mapper>

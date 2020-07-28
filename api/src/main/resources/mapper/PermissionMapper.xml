@@ -94,15 +94,20 @@
 
     <select id="listPermission" resultType="cn.pyj520.shop.api.model.vo.PermissionVO">
         SELECT
+        DISTINCT
         p.id, p.parent_id, p.name, p.deep, p.description
-        from user_info as ui
-        left join user_role as ur on ui.id=ur.uid
-        left join role_permission as rp on ur.rid =rp.pid
-        RIGHT join permission as p on rp.pid=p.id
-        where
-        ui.status=0
-        <if test="userId!=null">
-            and ui.id=#{userId}
+        FROM
+        (
+        <include refid="cn.pyj520.shop.api.dao.RoleMapper.listRoleByUserId">
+            <property name="userId" value="userId"/>
+        </include>
+        )
+        as ur
+        LEFT JOIN role_permission AS rp ON ur.id = rp.rid
+        INNER JOIN permission AS p ON rp.pid = p.id
+        where 1=1
+        <if test="parentId !=null">
+            and parent_id=#{parentId}
         </if>
     </select>
 </mapper>

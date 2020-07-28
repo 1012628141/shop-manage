@@ -1,7 +1,11 @@
 package cn.pyj520.shop.api.dao;
 
 import cn.pyj520.shop.api.model.po.Role;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Mapper
+@Repository
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +18,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    Integer maxSonId(Integer id);
 }

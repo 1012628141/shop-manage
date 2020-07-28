@@ -20,8 +20,9 @@ public class BaseDTO {
 
     private Integer userId;
 
+
     public void startPage() {
-        PageHelper.startPage(pageSize, pageNum);
+        PageHelper.startPage(pageNum,pageSize);
     }
 
 }

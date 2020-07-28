@@ -5,18 +5,21 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class Category {
     private Integer id;
 
     private String name;
 
-    private String description;
+    private Integer deep;
 
     private Integer parentId;
+
+    private Integer status;
+
+    private Date updateTime;
 
     private Date createTime;
 
@@ -36,12 +39,12 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getDeep() {
+        return deep;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setDeep(Integer deep) {
+        this.deep = deep;
     }
 
     public Integer getParentId() {
@@ -50,6 +53,22 @@ public class Role {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Date getCreateTime() {
